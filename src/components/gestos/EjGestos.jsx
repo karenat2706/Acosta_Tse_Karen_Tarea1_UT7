@@ -2,12 +2,9 @@ import Webcam from "react-webcam";
 import { useRef, useState } from "react";
 import * as handTrack from 'handtrackjs';
 import Texto from './Texto'
-
-
 export default function EjGestos() {
   const [label, setLabel] = useState(null);
-
-  
+  const [colorFondo, setColorFondo] = useState('pink'); // declaramos para cambiar el color
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -53,57 +50,58 @@ export default function EjGestos() {
       //console.log(predictions);
       predictions.map((prediction) => setLabel(prediction.label));
 
+      // con esto hacemos que cambie de color mediante apuntar con el dedo
+      if (label === "point") { 
+        if (colorFondo === 'pink') {
+          setColorFondo('orange');
+        } else {
+          setColorFondo('pink');
+        }
+      } 
+
       if (label === "open") {
         console.log("scrolling down");
-      
         window.scrollBy(0, window.innerHeight);
       } else if (label === "closed") {
         console.log("scrolling up");
-      
         window.scrollBy(0, -window.innerHeight);
-      } 
-      else 
-      {
+      }
+      else {
         console.log("detecting...");
-      
       }
     }
   };
   runHandtrack();
   return (
     <>
-        <div style = {{
-          alignItems: 'center',
-          display: 'flex',
-          backgroundColor: 'pink',
-          flexDirection: 'column',
-          }}>
-            <div>
-                <h3> Ejemplo Detección Gestos Mano: abierta y cerrada </h3>
-                <p> Tienes que conceder acceso a la webcam </p>
-            </div>
-            <div >
-                <Webcam
-                    ref={webcamRef}
-                    style={{
-                    width: 100,
-                    height: 100,
-                }}
-            />
-            <canvas
-                ref={canvasRef}
-                  style={{
-                    width: 100,
-                    height: 100,
-                  }}
-            />
+      <div style={{
+        alignItems: 'center',
+        display: 'flex',
+        backgroundColor: colorFondo, 
+        flexDirection: 'column',
+      }}>
+        <div>
+          <h3> Ejemplo Detección Gestos Mano: abierta y cerrada </h3>
+          <p> Tienes que conceder acceso a la webcam </p>
+        </div>
+        <div >
+          <Webcam
+            ref={webcamRef}
+            style={{
+              width: 100,
+              height: 100,
+            }}
+          />
+          <canvas
+            ref={canvasRef}
+            style={{
+              width: 100,
+              height: 100,
+            }}
+          />
         </div>
       </div>
-
       <Texto />
-      
-
-
     </>
   );
 }
