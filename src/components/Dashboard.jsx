@@ -19,7 +19,7 @@ function Dashboard() {
                         <Grid size={{xs:12, md:3, lg:3}}>        
                             <Link to={'/vozej2'} style={{textDecoration:'none', color:'white'}}>Voz: ejemplo comandos</Link>
                         </Grid>
-                        <Grid size={{xs:12, md:1, lg:1}}>        
+                        <Grid size={{xs:12, md:1, lg:2}}>        
                             <Link to={'/ar'} style={{textDecoration:'none', color:'white'}}>AR</Link>
                         </Grid>
                         {/* añadimos este enlace para acceder a la nueva página del modelo 3D */}
